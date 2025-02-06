@@ -83,6 +83,7 @@ class DORA implements RuleSetInterface
             'with {tB_07.01, default: null, interval: false}: if ( not ( isnull ({c0030}) ) ) or not (( isnull ({c0060}) )) or not (( isnull ({c0070}) )) or not (( isnull ({c0080}) )) or not (( isnull ({c0050}) )) or not (( isnull ({c0100}) )) or not (( isnull ({c0110}) )) or not (( isnull ({c0120}) )) then ( ( not ( isnull ({c0090}) ) )) endif',
             'with {tB_07.01, default: null, interval: false}: if ( not ( isnull ({c0030}) ) ) or not (( isnull ({c0060}) )) or not (( isnull ({c0070}) )) or not (( isnull ({c0080}) )) or not (( isnull ({c0090}) )) or not (( isnull ({c0100}) )) or not (( isnull ({c0050}) )) or not (( isnull ({c0120}) )) then ( ( not ( isnull ({c0110}) ) )) endif',
             'with {tB_07.01, default: null, interval: false}: if ( not ( isnull ({c0030}) ) ) or not (( isnull ({c0060}) )) or not (( isnull ({c0070}) )) or not (( isnull ({c0080}) )) or not (( isnull ({c0090}) )) or not (( isnull ({c0050}) )) or not (( isnull ({c0110}) )) or not (( isnull ({c0120}) )) then ( ( not ( isnull ({c0100}) ) )) endif',
+            /*
             'match({tB_01.01, c0020}[get ERI], "^[A-Z0-9]{18}[0-9]{2}$")',
             'match({tB_01.02, c0020}[get ESI], "^[A-Z0-9]{18}[0-9]{2}$")',
             'match({tB_01.03, c0030}[get LHH], "^[A-Z0-9]{18}[0-9]{2}$")',
@@ -91,6 +92,7 @@ class DORA implements RuleSetInterface
             'match({tB_03.03, c0031}[get LEB], "^[A-Z0-9]{18}[0-9]{2}$")',
             'match({tB_04.01, c0030}[get LES], "^[A-Z0-9]{18}[0-9]{2}$")',
             'match({tB_06.01, c0020}[get LES], "^[A-Z0-9]{18}[0-9]{2}$")',
+            */
         ];
     }
 }
