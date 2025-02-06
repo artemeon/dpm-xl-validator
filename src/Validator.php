@@ -27,7 +27,7 @@ class Validator
     public function validate(Sheet $sheet, array $row): Result
     {
         $failedRules = [];
-        foreach ($this->rule->getAll() as $rule) {
+        foreach ($this->rule->getAll() as $code => $rule) {
             $executor = new Executor('t' . ucfirst($sheet->value), $row);
             $parser = new DpmXLParser(new CommonTokenStream(new DpmXLLexer(InputStream::fromString($rule))));
             $tree = $parser->start();
@@ -35,7 +35,7 @@ class Validator
             $isValid = $executor->run($tree);
 
             if (!$isValid) {
-                $failedRules[] = $rule;
+                $failedRules[$code] = $rule;
             }
         }
 
