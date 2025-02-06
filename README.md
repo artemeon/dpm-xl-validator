@@ -16,6 +16,10 @@ $row = [
 ];
 
 $validator = new \Artemeon\DpmXLParser\Validator(new \Artemeon\DpmXLParser\RuleSet\DORA());
-$isValid = $validator->validate('tB_05.01', $row);
+$result = $validator->validate(\Artemeon\DpmXLParser\Sheet::B0501, $row);
+
+if (!$result->isValid) {
+    echo implode(', ', $result->failedRules);
+}
 
 ```
