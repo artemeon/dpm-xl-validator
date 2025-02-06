@@ -16,6 +16,7 @@ namespace Artemeon\DpmXLParser;
 use Artemeon\DpmXLParser\Exception\InvalidChildException;
 use Artemeon\DpmXLParser\Exception\InvalidContextException;
 use Artemeon\DpmXLParser\Exception\InvalidOperatorException;
+use Artemeon\DpmXLParser\Exception\SkipSheetException;
 use Artemeon\DpmXLParser\Generated\Context;
 use Artemeon\DpmXLParser\Generated\Context\ExpressionContext;
 
@@ -32,12 +33,18 @@ class Executor
             return false;
         }
 
-        $selection = $assignment->getChild(0);
-        if (!$selection instanceof Context\ExprWithSelectionContext) {
-            return false;
+        try {
+            $selection = $assignment->getChild(0);
+            if ($selection instanceof Context\ExprWithSelectionContext) {
+                return $this->runExprWithSelectionContext($selection);
+            } elseif ($selection instanceof Context\ExprWithoutPartialSelectionContext) {
+                return $this->runExprWithoutPartialSelectionContext($selection);
+            } else {
+                return false;
+            }
+        } catch (SkipSheetException) {
+            return true;
         }
-
-        return $this->runExprWithSelectionContext($selection);
     }
 
     private function runExprWithSelectionContext(Context\ExprWithSelectionContext $context): bool
@@ -46,11 +53,21 @@ class Executor
         if ($expr instanceof Context\PartialSelectContext) {
             $ruleSheet = $this->runPartialSelectContext($expr);
             if ($ruleSheet !== $this->sheet) {
-                return true;
+                throw new SkipSheetException($ruleSheet);
             }
         }
 
         $expression = $context->getChild(3);
+        if (!$expression instanceof Context\ExpressionContext) {
+            throw new InvalidContextException($expression::class);
+        }
+
+        return $this->runExpressionContext($expression);
+    }
+
+    private function runExprWithoutPartialSelectionContext(Context\ExprWithoutPartialSelectionContext $context): bool
+    {
+        $expression = $context->getChild(0);
         if (!$expression instanceof Context\ExpressionContext) {
             throw new InvalidContextException($expression::class);
         }
@@ -85,6 +102,8 @@ class Executor
             return $this->runInExprContext($context);
         } elseif ($context instanceof Context\IfExprContext) {
             return $this->runIfExprContext($context);
+        } elseif ($context instanceof Context\ClauseExprContext) {
+            return $this->runClauseExprContext($context);
         } else {
             throw new InvalidContextException($context::class);
         }
@@ -103,6 +122,21 @@ class Executor
         }
 
         return true;
+    }
+
+    private function runClauseExprContext(Context\ClauseExprContext $context): array
+    {
+        $selectContext = $context->getChild(0);
+        if (!$selectContext instanceof Context\SelectExprContext) {
+            throw new InvalidChildException($context::class, 0, Context\SelectExprContext::class);
+        }
+
+        $exprContext = $context->getChild(2);
+        if (!$exprContext instanceof Context\GetExprContext) {
+            throw new InvalidChildException($context::class, 2, Context\GetExprContext::class);
+        }
+
+        return $this->runSelectExprContext($selectContext);
     }
 
     private function runComparisonFunctionOperatorsContext(Context\ComparisonFunctionOperatorsContext $context): bool
@@ -250,12 +284,40 @@ class Executor
             throw new InvalidChildException($context::class, 0, Context\CellRefContext::class);
         }
 
-        return $this->runCompRefContext($operand->getChild(0));
+        $refContext = $operand->getChild(0);
+        if ($refContext instanceof Context\CompRefContext) {
+            return $this->runCompRefContext($refContext);
+        } elseif ($refContext instanceof Context\TableRefContext) {
+            return $this->runTableRefContext($refContext);
+        } else {
+            throw new InvalidContextException($refContext::class);
+        }
     }
 
     private function runCompRefContext(Context\CompRefContext $context): array
     {
         $colHandler = $context->getChild(0)->getChild(0);
+        if (!$colHandler instanceof Context\ColHandlerContext) {
+            throw new InvalidChildException($context::class, 0, Context\ColHandlerContext::class);
+        }
+
+        $result = [];
+        $columns = $this->runColHandlerContext($colHandler);
+        foreach ($columns as $column) {
+            $result[] = $this->row[$column] ?? null;
+        }
+
+        return $result;
+    }
+
+    private function runTableRefContext(Context\TableRefContext $context): array
+    {
+        $sheet = $context->getChild(0)->getText();
+        if ($sheet !== $this->sheet) {
+            throw new SkipSheetException($sheet);
+        }
+
+        $colHandler = $context->getChild(2)->getChild(0);
         if (!$colHandler instanceof Context\ColHandlerContext) {
             throw new InvalidChildException($context::class, 0, Context\ColHandlerContext::class);
         }

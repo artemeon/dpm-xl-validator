@@ -24,20 +24,21 @@ class Validator
     {
     }
 
-    public function validate(string $sheet, array $row): bool
+    public function validate(Sheet $sheet, array $row): Result
     {
+        $failedRules = [];
         foreach ($this->rule->getAll() as $rule) {
-            $executor = new Executor($sheet, $row);
+            $executor = new Executor('t' . ucfirst($sheet->value), $row);
             $parser = new DpmXLParser(new CommonTokenStream(new DpmXLLexer(InputStream::fromString($rule))));
             $tree = $parser->start();
 
             $isValid = $executor->run($tree);
 
             if (!$isValid) {
-                return false;
+                $failedRules[] = $rule;
             }
         }
 
-        return true;
+        return new Result(count($failedRules) === 0, $failedRules);
     }
 }
