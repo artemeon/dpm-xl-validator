@@ -356,7 +356,7 @@ namespace Artemeon\DpmXLParser\Generated {
 				return;
 			}
 
-			RuntimeMetaData::checkVersion('4.13.2', RuntimeMetaData::VERSION);
+			//RuntimeMetaData::checkVersion('4.13.2', RuntimeMetaData::VERSION);
 
 			$atn = (new ATNDeserializer())->deserialize(self::SERIALIZED_ATN);
 

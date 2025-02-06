@@ -20,6 +20,8 @@ use Artemeon\DpmXLParser\Generated\DpmXLParser;
 
 class Validator
 {
+    private array $ruleCache = [];
+
     public function __construct(private RuleSetInterface $rule)
     {
     }
@@ -28,11 +30,13 @@ class Validator
     {
         $failedRules = [];
         foreach ($this->rule->getAll() as $code => $rule) {
-            $executor = new Executor('t' . ucfirst($sheet->value), $row);
-            $parser = new DpmXLParser(new CommonTokenStream(new DpmXLLexer(InputStream::fromString($rule))));
-            $tree = $parser->start();
+            if (!isset($this->ruleCache[$code])) {
+                $parser = new DpmXLParser(new CommonTokenStream(new DpmXLLexer(InputStream::fromString($rule))));
+                $this->ruleCache[$code] = $parser->start();
+            }
 
-            $isValid = $executor->run($tree);
+            $executor = new Executor('t' . ucfirst($sheet->value), $row);
+            $isValid = $executor->run($this->ruleCache[$code]);
 
             if (!$isValid) {
                 $failedRules[$code] = $rule;
