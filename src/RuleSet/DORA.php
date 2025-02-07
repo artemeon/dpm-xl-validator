@@ -11,9 +11,9 @@
 
 declare(strict_types=1);
 
-namespace Artemeon\DpmXLParser\RuleSet;
+namespace Artemeon\DpmXLValidator\RuleSet;
 
-use Artemeon\DpmXLParser\RuleSetInterface;
+use Artemeon\DpmXLValidator\RuleSetInterface;
 
 class DORA implements RuleSetInterface
 {

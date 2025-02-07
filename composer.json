@@ -17,12 +17,12 @@
   ],
   "autoload": {
     "psr-4": {
-      "Artemeon\\DpmXLParser\\": "src/"
+      "Artemeon\\DpmXLValidator\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Artemeon\\DpmXLParser\\Tests\\": "tests/"
+      "Artemeon\\DpmXLValidator\\Tests\\": "tests/"
     }
   },
   "require": {

@@ -11,12 +11,12 @@
 
 declare(strict_types=1);
 
-namespace Artemeon\DpmXLParser;
+namespace Artemeon\DpmXLValidator;
 
 use Antlr\Antlr4\Runtime\CommonTokenStream;
 use Antlr\Antlr4\Runtime\InputStream;
-use Artemeon\DpmXLParser\Generated\DpmXLLexer;
-use Artemeon\DpmXLParser\Generated\DpmXLParser;
+use Artemeon\DpmXLValidator\Generated\DpmXLLexer;
+use Artemeon\DpmXLValidator\Generated\DpmXLParser;
 
 class Validator
 {

@@ -4,7 +4,7 @@
  * Generated from ./dpm_xlLexer.g4 by ANTLR 4.13.2
  */
 
-namespace Artemeon\DpmXLParser\Generated {
+namespace Artemeon\DpmXLValidator\Generated {
 	use Antlr\Antlr4\Runtime\Atn\ATNDeserializer;
 	use Antlr\Antlr4\Runtime\Atn\LexerATNSimulator;
 	use Antlr\Antlr4\Runtime\Lexer;

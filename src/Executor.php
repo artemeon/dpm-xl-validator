@@ -11,14 +11,14 @@
 
 declare(strict_types=1);
 
-namespace Artemeon\DpmXLParser;
+namespace Artemeon\DpmXLValidator;
 
-use Artemeon\DpmXLParser\Exception\InvalidChildException;
-use Artemeon\DpmXLParser\Exception\InvalidContextException;
-use Artemeon\DpmXLParser\Exception\InvalidOperatorException;
-use Artemeon\DpmXLParser\Exception\SkipSheetException;
-use Artemeon\DpmXLParser\Generated\Context;
-use Artemeon\DpmXLParser\Generated\Context\ExpressionContext;
+use Artemeon\DpmXLValidator\Exception\InvalidChildException;
+use Artemeon\DpmXLValidator\Exception\InvalidContextException;
+use Artemeon\DpmXLValidator\Exception\InvalidOperatorException;
+use Artemeon\DpmXLValidator\Exception\SkipSheetException;
+use Artemeon\DpmXLValidator\Generated\Context;
+use Artemeon\DpmXLValidator\Generated\Context\ExpressionContext;
 
 class Executor
 {

@@ -4,7 +4,7 @@
  * Generated from ./dpm_xlParser.g4 by ANTLR 4.13.2
  */
 
-namespace Artemeon\DpmXLParser\Generated {
+namespace Artemeon\DpmXLValidator\Generated {
 	use Antlr\Antlr4\Runtime\Atn\ATN;
 	use Antlr\Antlr4\Runtime\Atn\ATNDeserializer;
 	use Antlr\Antlr4\Runtime\Atn\ParserATNSimulator;
@@ -2824,14 +2824,14 @@ namespace Artemeon\DpmXLParser\Generated {
 	}
 }
 
-namespace Artemeon\DpmXLParser\Generated\Context {
+namespace Artemeon\DpmXLValidator\Generated\Context {
 	use Antlr\Antlr4\Runtime\ParserRuleContext;
 	use Antlr\Antlr4\Runtime\Token;
 	use Antlr\Antlr4\Runtime\Tree\ParseTreeVisitor;
 	use Antlr\Antlr4\Runtime\Tree\TerminalNode;
 	use Antlr\Antlr4\Runtime\Tree\ParseTreeListener;
-    use Artemeon\DpmXLParser\Generated\DpmXLParser;
-	use Artemeon\DpmXLParser\Generated\DpmXLParserListener;
+    use Artemeon\DpmXLValidator\Generated\DpmXLParser;
+	use Artemeon\DpmXLValidator\Generated\DpmXLParserListener;
 
 	class StartContext extends ParserRuleContext
 	{

@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Artemeon\DpmXLParser\Exception;
+namespace Artemeon\DpmXLValidator\Exception;
 
 class InvalidChildException extends ValidatorException
 {

@@ -11,11 +11,11 @@
 
 declare(strict_types=1);
 
-namespace Artemeon\DpmXLParser\Tests;
+namespace Artemeon\DpmXLValidator\Tests;
 
-use Artemeon\DpmXLParser\RuleSet\DORA;
-use Artemeon\DpmXLParser\Sheet;
-use Artemeon\DpmXLParser\Validator;
+use Artemeon\DpmXLValidator\RuleSet\DORA;
+use Artemeon\DpmXLValidator\Sheet;
+use Artemeon\DpmXLValidator\Validator;
 use PHPUnit\Framework\TestCase;
 
 class ValidatorTest extends TestCase

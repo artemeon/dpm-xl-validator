@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Artemeon\DpmXLParser;
+namespace Artemeon\DpmXLValidator;
 
 enum Sheet: string
 {
