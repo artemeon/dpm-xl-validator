@@ -15,8 +15,8 @@ $row = [
     // ...
 ];
 
-$validator = new \Artemeon\DpmXLParser\Validator(new \Artemeon\DpmXLParser\RuleSet\DORA());
-$result = $validator->validate(\Artemeon\DpmXLParser\Sheet::B0501, $row);
+$validator = new \Artemeon\DpmXLValidator\Validator(new \Artemeon\DpmXLValidator\RuleSet\DORA());
+$result = $validator->validate(\Artemeon\DpmXLValidator\Sheet::B0501, $row);
 
 if (!$result->isValid) {
     echo implode(', ', $result->failedRules);
